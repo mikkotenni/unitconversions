@@ -30,7 +30,7 @@ export const convert = async (
   to: string,
   value: number
 ): Promise<string> => {
-  const GRAPHQL_ENDPOINT = "http://localhost:3000/graphql";
+  const GRAPHQL_ENDPOINT = "http://localhost:3000/convert";
   const HEADERS = {
     "Content-Type": "application/json",
   };
