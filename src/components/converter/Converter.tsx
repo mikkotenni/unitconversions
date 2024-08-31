@@ -1,8 +1,12 @@
-import React from 'react'
+import React from "react";
+import { convert } from '../../api/converter';
 
+/**
+ * Represents the properties for the Converter component.
+ */
 interface ConverterProps {
-    unitFrom: string;
-    unitTo: string;
+  unitFrom: string;
+  unitTo: string;
 }
 
 /**
@@ -12,12 +16,23 @@ interface ConverterProps {
  * @param unitTo The unit to convert to.
  * @returns The Converter component.
  */
-function Converter({ unitFrom, unitTo}: ConverterProps) {
-  return (
-    <>
-        Converting from {unitFrom} to {unitTo}
-    </>
-  )
-}
+const Converter: React.FC<ConverterProps> = ({ unitFrom, unitTo }) => {
+  const value = 1.1;
+  const handleConvert = async () => {
+    try {
+      const conversionResult = await convert(unitFrom, unitTo, value);
+      console.log(conversionResult);
+    } catch (error) {
+      console.error("Conversion failed:", error);
+    }
+  };
 
-export default Converter
+  return (
+    <div>
+      Converting from {unitFrom} to {unitTo}
+      <button onClick={handleConvert}>Convert</button>
+    </div>
+  );
+};
+
+export default Converter;
