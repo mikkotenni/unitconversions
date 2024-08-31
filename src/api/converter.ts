@@ -34,7 +34,10 @@ export const convert = async (
   const HEADERS = {
     "Content-Type": "application/json",
   };
-  // The GraphQL query to send to the server.
+  /**
+   * For more information on queries and variables, please refer to
+   * https://graphql.org/learn/queries/
+   */
   const query = `
     query Convert($from: String!, $to: String!, $value: Float!) {
       unit(from: $from, to: $to, value: $value) {
