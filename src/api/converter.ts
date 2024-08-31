@@ -30,6 +30,10 @@ export const convert = async (
   to: string,
   value: number
 ): Promise<string> => {
+  const GRAPHQL_ENDPOINT = "http://localhost:3000/graphql";
+  const HEADERS = {
+    "Content-Type": "application/json",
+  };
   // The GraphQL query to send to the server.
   const query = `
     query Convert($from: String!, $to: String!, $value: Float!) {
@@ -45,11 +49,9 @@ export const convert = async (
   };
 
   try {
-    const response = await fetch("http://localhost:3000/graphql", {
+    const response = await fetch(GRAPHQL_ENDPOINT, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: HEADERS,
       body: JSON.stringify({
         query,
         variables,
@@ -63,9 +65,8 @@ export const convert = async (
     const data = await response.json();
 
     if (data.errors) {
-      throw new Error(
-        data.errors.map((err: ConvertError) => err.message).join(", ")
-      );
+      const errorMessage = data.errors.map((err: ConvertError) => err.message).join(", ");
+      throw new Error(`GraphQL errors: ${errorMessage}`);
     }
 
     return data.data.unit.result;
